@@ -272,7 +272,7 @@ class LdapMultiAuthPlugin extends Plugin {
 			return false;
 		}
 
-		if ($rows <= 0) {
+		if ($rows <= 1) {
 			$this->createDBTables();
 		}
 		else {
