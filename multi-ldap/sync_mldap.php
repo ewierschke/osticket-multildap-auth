@@ -190,6 +190,11 @@ class SyncLDAPMultiClass extends LDAPMultiAuthentication {
 									SET status = '3' WHERE user_id = " . $user->user_id);
 				$this->log_report['status'] = "(Acct Disabled)";
 			}
+			elseif ($user->useraccountcontrol == 512 || $user->useraccountcontrol == 66048 && $synckey['status'] == 1) {
+							$lock_user_sql = db_query("UPDATE " . TABLE_PREFIX . "user_account
+															SET status = '9' WHERE user_id = " . $user->user_id);
+							$this->log_report['status'] = "(Acct Enabled)";
+					}
 			else {
 				if ($synckey['status'] == 3) {
 					$lock_user_sql = db_query("UPDATE " . TABLE_PREFIX . "user_account
@@ -440,10 +445,10 @@ class SyncLDAPMultiClass extends LDAPMultiAuthentication {
 
 			// Go thru every osTicket user and add them to the sync table if a match is found
 			foreach (db_assoc_array($qry_ostusers, MYSQLI_ASSOC) as $sql_ostusers) {
-				$key = trim(strtolower($sql_ostusers['mail'])); //Key value for matching users
+				$key = trim($sql_ostusers['mail']); //Key value for matching users
 				$user_ldap = $ad_users[$key];
 
-				if (strtolower($key == $user_ldap->mail)) {
+				if ($key == $user_ldap->mail) {
 					//Lets check users and add them to the guid table if a match is found
 					$result = db_query("SELECT id FROM " . TABLE_PREFIX . "ldap_sync WHERE id = '" . $sql_ostusers['user_id'] . "'");
 					if (db_num_rows($result) == 0 && $key == $ad_users[$key]->mail) {
