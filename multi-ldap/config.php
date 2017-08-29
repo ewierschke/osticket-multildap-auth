@@ -366,7 +366,6 @@ class LdapMultiAuthPluginConfig extends PluginConfig {
 
     function pre_save(&$config, &$errors) {
         require_once ('class.AuthLdap.php');
-        //include ('LDAP2.php');
         list($__, $_N) = self::translate();
         global $ost;
         if ($ost && !extension_loaded('ldap')) {
