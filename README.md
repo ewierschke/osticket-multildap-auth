@@ -38,3 +38,5 @@ Planning on adding a TAB feature to make setting section easier to manage.
 ### From source
 
 to be updated.........
+
+** modifications for use case of this fork likely breaks the ability to connect to multiple LDAP directories
