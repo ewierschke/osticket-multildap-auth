@@ -421,8 +421,7 @@ class LdapMultiAuthPluginConfig extends PluginConfig {
                 if ($config['bind_dn']) {
                         $info['bindpw'] = $config['bind_pw']
                                 ? $config['bind_pw']
-                                : Crypto::decrypt($this->get('bind_pw'), SECRET_SALT,
-                                        $this->getNamespace());
+                                : Crypto::decrypt($this->get('bind_pw'), SECRET_SALT, SECRET_SALT);
                 }
         }
 //end from ldap plugin
@@ -440,7 +439,7 @@ class LdapMultiAuthPluginConfig extends PluginConfig {
 //from ldap plugin
         if (!$errors && $config['bind_pw'])
                 $config['bind_pw'] = Crypto::encrypt($config['bind_pw'],
-                        SECRET_SALT, $this->getNamespace());
+                        SECRET_SALT, SECRET_SALT);
         else
                 $config['bind_pw'] = $this->get('bind_pw');
 //end from ldap plugin

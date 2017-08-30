@@ -24,7 +24,8 @@ class SyncLDAPMultiClass extends LDAPMultiAuthentication {
 			$bind_dna = preg_split('/;/', $bind_dn) [$i];
 
 			$bind_pw = $this->config['bind_pw'];
-			$bind_pwa = preg_split('/;|,/', $bind_pw) [$i];
+			$bind_pwa = Crypto::decrypt($bind_pw, SECRET_SALT, SECRET_SALT);
+			//$bind_pwa = preg_split('/;|,/', $bind_pw) [$i];
 
 			$ldapinfo[] = array(
 				'dn' => $dn,
